@@ -3,8 +3,9 @@ const router = new express.Router()
 const Tag = require('../models/Tags')
 const NewsTag = require('../models/NewsTags')
 const NewsTags = require('../models/NewsTags')
+const isLoggedIn = require('../middlewares/auth')
 
-router.get('/tags', async (req, res) => {
+router.get('/tags', isLoggedIn, async (req, res) => {
 
     try {
 
@@ -19,7 +20,7 @@ router.get('/tags', async (req, res) => {
 
 })
 
-router.post('/tags/save', async (req, res) => {
+router.post('/tags/save', isLoggedIn, async (req, res) => {
 
     try {
         const name = req.body.name
@@ -34,7 +35,7 @@ router.post('/tags/save', async (req, res) => {
 
 })
 
-router.get('/tags/delete/:id', async (req, res) => {
+router.get('/tags/delete/:id', isLoggedIn, async (req, res) => {
 
     try {
 
@@ -57,7 +58,7 @@ router.get('/tags/delete/:id', async (req, res) => {
 
 })
 
-router.post('/tags/update', async (req, res) => {
+router.post('/tags/update', isLoggedIn, async (req, res) => {
 
     try {
 

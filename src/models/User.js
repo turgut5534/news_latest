@@ -1,34 +1,67 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../db/postresql');
-const News = require('./News');
-// define the User model
-const User = sequelize.define('users', {
+const UserPassword = require('../models/UserPassword')
+
+const User = sequelize.define('user', {
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     autoIncrement: true,
-    primaryKey: true,
-  },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
+    primaryKey: true
   },
   email: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
+    unique: true
   },
-  password: {
-    type: DataTypes.STRING,
+  facebook_id: {
+    type: DataTypes.INTEGER,
     allowNull: false,
+    defaultValue: 0
   },
-  salt: {
-    type: DataTypes.STRING,
+  google_id: {
+    type: DataTypes.INTEGER,
     allowNull: false,
+    defaultValue: 0
   },
+  instagram_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0
+  },
+  apple_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0
+  },
+  verified_member: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0
+  },
+  created_date: {
+    type: DataTypes.DATE,
+    allowNull: false
+  },
+  updated_date: {
+    type: DataTypes.DATE,
+    allowNull: false
+  },
+  RefreshToken: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  RefreshTokenEndDate: {
+    type: DataTypes.DATE,
+    allowNull: true
+  }
 }, {
-  timestamps: true, // enable timestamps
+  tableName: 'user'
 });
 
+User.hasMany(UserPassword, { foreignKey: 'user_id' });
+
+
+// sequelize.sync()
 
 module.exports = User;

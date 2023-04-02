@@ -4,14 +4,22 @@ const News = require('../models/News')
 const NewsTags = require('../models/NewsTags')
 const Tags = require('../models/Tags')
 const User = require('../models/User')
+const Reaction = require('../models/Reaction')
 const fs = require('fs')
 const isLoggedIn = require('../middlewares/auth')
 const multer = require('multer')
 const { v4: uuidv4 } = require('uuid');
 const path = require('path')
 const uploadDirectory = path.join(__dirname, '../../uploads')
+const crypto = require('crypto')
+const UserPassword = require('../models/UserPassword')
 
-router.get('/news', async (req, res) => {
+
+router.get('/', (req,res) => {
+  res.redirect('/news')
+})
+
+router.get('/news', isLoggedIn,  async (req, res) => {
 
   try {
 
@@ -28,7 +36,7 @@ router.get('/news', async (req, res) => {
 
 })
 
-router.get('/news/add', async (req, res) => {
+router.get('/news/add', isLoggedIn,  async (req, res) => {
   
   const tags = await Tags.findAll()
 
@@ -36,7 +44,7 @@ router.get('/news/add', async (req, res) => {
 })
 
 
-router.get('/news/edit/:id', async(req,res) => {
+router.get('/news/edit/:id',isLoggedIn, async(req,res) => {
 
   try {
 
@@ -63,7 +71,7 @@ router.get('/news/edit/:id', async(req,res) => {
   
 })
 
-router.post('/update', async(req,res) => {
+router.post('/update', isLoggedIn, async(req,res) => {
   
   const { id, title, description, lang, tags } = req.body
   
@@ -80,7 +88,21 @@ router.post('/update', async(req,res) => {
       returning: true
     })
 
-    // const allTags = NewsTags.findAll({ where: { news_id: theNews.id } })
+    // const allTags = await NewsTag.findAll({
+    //   where: { news_id: theNews.id },
+    //   include: [Tags]
+    // });
+    
+
+    // const tagNames = allTags.map(tag => tag.Tag.name);
+    // console.log(tagNames)
+ 
+
+    // get unchecked tags
+    // const checkedTags = tags
+    // const uncheckedTags = allTags.filter(tag => !checkedTags.includes(tag));
+
+
 
     for(const tag of tags) {
 
@@ -103,7 +125,7 @@ router.post('/update', async(req,res) => {
 
 })
 
-router.get('/delete/:id', async (req, res) => {
+router.get('/delete/:id', isLoggedIn,  async (req, res) => {
 
   console.log(req.params.id)
 
@@ -143,7 +165,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
-router.post('/save', upload.single('image'), async (req, res) => {
+router.post('/save', isLoggedIn, upload.single('image'), async (req, res) => {
 
   const { title, description, lang, tags } = req.body
 
@@ -188,7 +210,7 @@ router.post('/save', upload.single('image'), async (req, res) => {
 
 });
 
-router.get('/news/delete/:id', async(req,res) => {
+router.get('/news/delete/:id', isLoggedIn,  async(req,res) => {
 
   try {
 
@@ -213,5 +235,6 @@ router.get('/news/delete/:id', async(req,res) => {
   }
 
 })
+
 
 module.exports = router;
