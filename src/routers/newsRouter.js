@@ -95,9 +95,14 @@ router.post('/update', isLoggedIn, async(req,res) => {
 
     const tagIDs = newsTags.map(tag => tag.tag.id);
 
+
     // get unchecked tags
     const checkedTags = tags 
-    const checkedTagIds = checkedTags.map(id => parseInt(id));
+    let checkedTagIds = [] 
+
+    if(checkedTags != undefined ) {
+      checkedTagIds.push(checkedTags.map(id => parseInt(id)));
+    }
 
     for(i=0; i<tagIDs.length; i++) {
 
@@ -107,18 +112,21 @@ router.post('/update', isLoggedIn, async(req,res) => {
 
     }
 
-    for(const tag of tags) {
+    if(tags) {
+      for(const tag of tags) {
 
-        const checkTagNews = await NewsTags.findOne({ where: { news_id: theNews.id, tag_id: tag } });
+          const checkTagNews = await NewsTags.findOne({ where: { news_id: theNews.id, tag_id: tag } });
 
-        if(!checkTagNews) {
-            await NewsTags.create({
-              news_id : theNews.id,
-              tag_id: tag
-            })
-        }
+          if(!checkTagNews) {
+              await NewsTags.create({
+                news_id : theNews.id,
+                tag_id: tag
+              })
+          }
 
+      }
     }
+
 
     res.redirect('/news')
 
