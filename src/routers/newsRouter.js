@@ -80,6 +80,8 @@ router.post('/update', async(req,res) => {
       returning: true
     })
 
+    // const allTags = NewsTags.findAll({ where: { news_id: theNews.id } })
+
     for(const tag of tags) {
 
         const checkTagNews = await NewsTags.findOne({ where: { news_id: theNews.id, tag_id: tag } });
