@@ -26,6 +26,7 @@ const NewsTag = sequelize.define('news_tag', {
   },
 });
 
-// NewsTag.hasMany(Tags, { foreignKey: 'tag_id' });
+NewsTag.belongsTo(Tags, { foreignKey: 'tag_id' });
+Tags.hasMany(NewsTag, {foreignKey: 'tag_id' })
 
 module.exports = NewsTag;

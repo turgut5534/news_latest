@@ -88,21 +88,24 @@ router.post('/update', isLoggedIn, async(req,res) => {
       returning: true
     })
 
-    // const allTags = await NewsTag.findAll({
-    //   where: { news_id: theNews.id },
-    //   include: [Tags]
-    // });
-    
+    const newsTags = await NewsTags.findAll({
+      where: { news_id: theNews.id },
+      include: [Tags]
+    });
 
-    // const tagNames = allTags.map(tag => tag.Tag.name);
-    // console.log(tagNames)
- 
+    const tagIDs = newsTags.map(tag => tag.tag.id);
 
     // get unchecked tags
-    // const checkedTags = tags
-    // const uncheckedTags = allTags.filter(tag => !checkedTags.includes(tag));
+    const checkedTags = tags 
+    const checkedTagIds = checkedTags.map(id => parseInt(id));
 
+    for(i=0; i<tagIDs.length; i++) {
 
+      if(!checkedTagIds.includes(tagIDs[i])) {
+        await NewsTags.destroy({ where: { news_id: theNews.id, tag_id: tagIDs[i] } })
+      }
+
+    }
 
     for(const tag of tags) {
 
