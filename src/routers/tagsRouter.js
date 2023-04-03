@@ -9,7 +9,9 @@ router.get('/tags', isLoggedIn, async (req, res) => {
 
     try {
 
-        const tags = await Tag.findAll()
+        const tags = await Tag.findAll({
+            order: [['createdAt', 'DESC']]
+        })
         res.render('tags/tags', {
             tags: tags
         })

@@ -15,12 +15,13 @@ router.get('/', (req,res) => {
   res.redirect('/news')
 })
 
-router.get('/news', isLoggedIn,  async (req, res) => {
+router.get('/news', isLoggedIn, async (req, res) => {
 
   try {
 
     const news =await News.findAll({
-      include: User
+      include: User,
+      order: [['createdAt', 'desc']]
     })
     res.render('news/news', {
       news: news
