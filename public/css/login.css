@@ -8320,6 +8320,11 @@
     color: #fbceb5; }
     .checkbox-primary input:checked ~ .checkmark:after {
       color: #fbceb5; }
+
+      .disabled-btn {
+        opacity: 0.5; /* Fade the button */
+        pointer-events: none; /* Disable pointer events */
+      }
   
   .btn {
     cursor: pointer;
@@ -8327,7 +8332,7 @@
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
     font-size: 15px;
-    text-transform: uppercase; }
+ }
     .btn:hover, .btn:active, .btn:focus {
       outline: none; }
     .btn.btn-primary {

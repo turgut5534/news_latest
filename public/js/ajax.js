@@ -2,12 +2,16 @@ $('.signin-form').on('submit', function(e) {
 
     e.preventDefault()
 
+    const button = $(this).find('button[type="submit"]')
+    button.addClass('disabled-btn')
+
     $.ajax({
         type: "POST", 
         url : $(this).attr('action'),
         data: $(this).serialize(),
         beforeSend: function() {
-
+            button.disabled = true
+            button.text('Lütfen bekleyiniz...')
         },
         success: function(s) {
             iziToast.success({
@@ -22,6 +26,8 @@ $('.signin-form').on('submit', function(e) {
         error :function(xhr, status, error) {
 
             const response = JSON.parse(xhr.responseText)
+            button.removeClass('disabled-btn')
+            button.text('Giriş Yap')
   
             iziToast.error({
                   title: 'Error',
