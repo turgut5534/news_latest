@@ -51,12 +51,13 @@ const User = sequelize.define('user', {
     type: DataTypes.STRING,
     allowNull: true
   },
-  RefreshTokenEndDate: {
+  ResfreshTokenEndDate: {
     type: DataTypes.DATE,
     allowNull: true
   }
 }, {
-  tableName: 'user'
+  tableName: 'user',
+  timestamps: false
 });
 
 User.hasMany(UserPassword, { foreignKey: 'user_id' });

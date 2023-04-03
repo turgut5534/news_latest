@@ -49,6 +49,8 @@ const News = sequelize.define('news', {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
     }
+  }, {
+    timestamps: false
   });
 
   News.belongsTo(User, { foreignKey: 'authorId' });

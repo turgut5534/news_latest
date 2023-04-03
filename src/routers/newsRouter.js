@@ -4,16 +4,12 @@ const News = require('../models/News')
 const NewsTags = require('../models/NewsTags')
 const Tags = require('../models/Tags')
 const User = require('../models/User')
-const Reaction = require('../models/Reaction')
 const fs = require('fs')
 const isLoggedIn = require('../middlewares/auth')
 const multer = require('multer')
 const { v4: uuidv4 } = require('uuid');
 const path = require('path')
 const uploadDirectory = path.join(__dirname, '../../uploads')
-const crypto = require('crypto')
-const UserPassword = require('../models/UserPassword')
-
 
 router.get('/', (req,res) => {
   res.redirect('/news')
@@ -31,6 +27,7 @@ router.get('/news', isLoggedIn,  async (req, res) => {
     })
 
   } catch (e) {
+     console.log(e)
      res.status(400).send(e)
   }
 
@@ -83,7 +80,7 @@ router.post('/update', isLoggedIn, async(req,res) => {
       return res.status(500).send()
     }
 
-    await News.update({ title: title, description: description, authorId: 1, lang:lang, updated_at: new Date().toISOString() }, {
+    await News.update({ title: title, description: description, authorId: req.user.id, lang:lang, updated_at: new Date().toISOString() }, {
       where: { id: id },
       returning: true
     })
@@ -185,7 +182,7 @@ router.post('/save', isLoggedIn, upload.single('image'), async (req, res) => {
     const newsRow = await News.create({
       title: title,
       description: description,
-      authorId: 1,
+      authorId: req.user.id,
       image: req.file.filename,
       lang: lang,
       created_at: new Date().toISOString('tr-TR'),

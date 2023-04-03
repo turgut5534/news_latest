@@ -26,16 +26,19 @@ const NewsReaction = sequelize.define('news_reaction', {
   action_type: {
     type: DataTypes.INTEGER
   },
-  created_at: {
+  created_date: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
     allowNull: false
   },
-  updated_at: {
+  updated_date: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
     allowNull: false
   }
+}, {
+  tableName: 'news_reaction',
+  timestamps: false
 });
 
 module.exports = NewsReaction;

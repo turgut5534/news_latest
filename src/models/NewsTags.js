@@ -24,6 +24,16 @@ const NewsTag = sequelize.define('news_tag', {
       key: 'id',
     },
   },
+  createdAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW
+  }
+}, {
+  timestamps: false
 });
 
 NewsTag.belongsTo(Tags, { foreignKey: 'tag_id' });

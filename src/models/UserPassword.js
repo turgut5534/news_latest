@@ -33,6 +33,9 @@ const UserPassword = sequelize.define('user_password', {
     type: DataTypes.DATE,
     allowNull: false
   }
+}, {
+  tableName: 'user_password',
+  timestamps: false
 });
 
 module.exports = UserPassword;
