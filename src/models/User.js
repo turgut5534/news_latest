@@ -62,6 +62,6 @@ const User = sequelize.define('user', {
 User.hasMany(UserPassword, { foreignKey: 'user_id' });
 
 
-sequelize.sync()
+// sequelize.sync()
 
 module.exports = User;
