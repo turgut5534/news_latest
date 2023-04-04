@@ -1,6 +1,7 @@
 const express = require('express')
 const router = new express.Router()
 const passport = require('../utils/passport')
+const db = require('../db/postresql')
 
 router.get('/login', (req,res) => {
 
@@ -11,7 +12,15 @@ router.get('/login', (req,res) => {
     return res.render('login/login')
 })
 
-router.post('/login', function(req, res, next) {
+router.post('/login', async function(req, res, next) {
+
+  try {
+    await db.authenticate();
+    console.log('Connection has been established successfully.');
+  } catch (error) {
+    return res.status(401).json({ message: 'Veritabanına bağlanılamıyor' });
+  }
+
   passport.authenticate('local', function(err, user, info) {
     if (err) { return next(err); }
 
