@@ -50,4 +50,14 @@ router.get('/logout', (req,res) => {
   res.redirect('/login')
 })
 
+router.get('*', (req,res) => {
+
+  if(!req.user) {
+    return res.redirect('/login')
+  }
+
+  res.render('404/404')
+
+})
+
 module.exports = router;

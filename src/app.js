@@ -8,6 +8,7 @@ const port = process.env.PORT || 3000
 const session = require('express-session');
 const bodyParser = require('body-parser')
 const passport = require('./utils/passport')
+const checkConnection = require('./middlewares/connection')
 
 const viewsDir = path.join(__dirname, '../templates/views')
 const publicDir = path.join(__dirname, '../public')
@@ -37,10 +38,14 @@ app.use(express.static(viewsDir))
 app.use(express.static(publicDir))
 app.use(express.static(uploadDirectory))
 app.use(express.json())
+
+newsRouter.use(checkConnection)
+tagsRouter.use(checkConnection)
+loginRouter.use(checkConnection)
+
 app.use(newsRouter)
 app.use(tagsRouter)
 app.use(loginRouter)
-
 
 app.listen(port, () => {
     console.log(`Server is up on ${port}`)
