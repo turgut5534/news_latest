@@ -177,15 +177,19 @@
             <% if (tags && tags.length) { %>
             <div class="mb-3">
                 <h3>Etiketler</h3>
+                <div class="row">
                 <% tags.forEach((item) => { %>
+                    <div class="col-lg-3 col-md-4 col-6 my-1">
                     <% if (news.news_tags.map(tag => tag.tag.name).includes(item.name)) { %>
-                        <label for=""><%= item.name %></label>
-                        <input class="me-3" type="checkbox" name="tags[]" value="<%= item.id %>" checked>
+                        <input class="me-3" type="checkbox" id="<%= item.id %>" name="tags[]" value="<%= item.id %>" checked>
+                        <label for="<%= item.id %>"><%= item.name %></label>
                       <% } else { %>
-                        <label for=""><%= item.name %></label>
-                        <input class="me-3" type="checkbox" name="tags[]" value="<%= item.id %>">
+                        <input class="me-3" type="checkbox" id="<%= item.id %>" name="tags[]" value="<%= item.id %>">
+                        <label for="<%= item.id %>"><%= item.name %></label>
                       <% } %>
+                    </div>
                  <% }) %> 
+                </div>
             </div>
             <% } %>  
 

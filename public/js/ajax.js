@@ -254,31 +254,3 @@ $('.close').on('click', function () {
 $('.upload-button').on('click', function() {
     $('.file-input').click()
 })
-
-$('#add-news-form').on('submit' , function(e) {
-
-    e.preventDefault()
-
-    var formData = new FormData()
-
-    $.each($('form').serializeArray(), function() {
-        formData.append(this.name, this.value);
-    });
-
-    console.log(formData)
-
-    // $.ajax({
-    //     type: 'POST',
-    //     url: '/save',
-    //     dataType: 'JSON',
-    //     data: formData,
-    //     processData: false,
-    //     contentType: false,
-    //     success: function() {
-
-    //     },
-    //     error: function(e) {
-    //         console.log(e)
-    //     }
-    // })
-})

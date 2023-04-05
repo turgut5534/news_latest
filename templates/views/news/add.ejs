@@ -141,15 +141,22 @@
                     <input class="form-control" type="file" id="title" name="image" required accept="image/*">
                 </div>
 
-                <div class="mb-3">
-                    <% tags.forEach((item) => { %>
-                    <input type="checkbox" name="tags[]" id="<%= item.name %>" value="<%= item.id %>">
-                    <label class="me-3" for="<%= item.name %>"><%= item.name %></label>
-                    <% }) %>
+                <div class="mb-3 mt-3">
+                    <h3>Etiketler</h3>
+                    <div class="row">
+                        <% tags.forEach((item) => { %>
+                            <div class="col-lg-3 col-md-4 col-6 my-1">
+                                <input type="checkbox" name="tags[]" id="<%= item.name %>" value="<%= item.id %>">
+                                <label class="me-3" for="<%= item.name %>"><%= item.name %></label>
+                            </div>
+                        <% }) %>
+                    </div>
                 </div>
 
-
-                <button type="submit" class="btn btn-primary mb-3">Kaydet</button>
+                <div class="my-3">
+                    <button type="submit" class="btn btn-primary mb-3 w-100 d-block">Kaydet</button>
+                </div>
+                
 
             </form>
         </div>
