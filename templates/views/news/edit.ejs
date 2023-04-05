@@ -1,11 +1,48 @@
 <%- include('../../partials/head' , { title: 'Haberler' }) %>
 <%- include('../../partials/header') %>
 
+<style>
+
+    img {
+        display: block;
+        max-width: 100%;
+    }
+    .preview {
+        text-align: center;
+        overflow: hidden;
+        width: 160px; 
+        height: 160px;
+        margin: 10px;
+        border: 1px solid red;
+    }
+
+    .section{
+        margin-top:150px;
+        background:#fff;
+        padding:50px 30px;
+    }
+    .modal-lg{
+        max-width: 1000px !important;
+    }
+</style>
+
 <div class="container mt-5">
     <div class="row justify-content-center">
         <form class="col-10" action="/update" method="POST">
 
-            <input type="hidden" name="id" value="<%= news.id %>">
+            <input type="hidden" name="id" id="news-id" value="<%= news.id %>">
+
+            <div class="mb-3 text-center">
+                <% if (news.image) { %>
+                    <img style="width: 100%; height:auto;" id="news-original-image" src="/<%= news.image %>" alt="">
+                <% } %>
+            </div>
+
+            <div class="mb-3 text-center">
+                <input type="file" name="image" class="d-none file-input">
+                <button type="button" class="btn btn-success upload-button">Değiştir</button>
+            </div>
+            
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Haber Başlığı</label>
                 <input type="text" class="form-control" name="title" value="<%= news.title %>" id="exampleInputEmail1"
@@ -137,17 +174,6 @@
                 <textarea id="content" name="description"><%= news.description %></textarea>
             </div>
 
-            <div class="mb-3">
-                <label for="">Haber Kapak Resmi</label>
-                <input class="form-control" type="file" id="title" name="image" accept="image/*">
-            </div>
-
-            <div class="mb-3">
-                <a class="nav-link" href="/<%= news.image %>" data-fancybox="gallery">
-                    Resmi Gör
-                </a>
-            </div>
-
             <% if (tags && tags.length) { %>
             <div class="mb-3">
                 <h3>Etiketler</h3>
@@ -171,6 +197,7 @@
         </form>
     </div>
 </div>
+
 
 <script src="https://cdn.ckeditor.com/ckeditor5/31.1.0/classic/ckeditor.js"></script>
     <script>

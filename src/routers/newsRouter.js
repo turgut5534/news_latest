@@ -246,4 +246,28 @@ router.get('/news/delete/:id', isLoggedIn,  async(req,res) => {
 })
 
 
+router.post('/news/image/update', upload.single('image'), async(req,res) => {
+
+  const file = req.file;
+  const news_id = req.body.news_id
+
+  if (!file) {
+    return res.status(400).send({ error: 'No file uploaded' });
+  }
+
+  const news = await News.findByPk(news_id)
+
+  if(news.image) {
+    const path = uploadDirectory + '/' + news.image
+    await fs.promises.unlink(path)
+  }
+
+  news.image = req.file.filename
+
+  await news.save()
+
+  res.send({ message: 'Resim başarıyla güncellendi', name: news.image });
+})
+
+
 module.exports = router;
