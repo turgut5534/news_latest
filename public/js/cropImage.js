@@ -65,6 +65,10 @@ $("#crop").click(function(){
         data: formData,
         processData: false,
         contentType: false,
+        beforeSend: function() {
+          $('#crop').html('İşleniyor...')
+          $('#crop').attr('disabled', true)
+        },
         success: function(data){
 
           $modal.modal('hide');
